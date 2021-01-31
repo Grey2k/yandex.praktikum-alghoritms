@@ -1,0 +1,7 @@
+## The following requirements were added by pip freeze:
+pip==21.0.1
+setuptools==52.0.0
+yapf==0.30.0
+flake8==3.8.4
+coverage==5.4
+pytest==6.2.2
