@@ -1,22 +1,29 @@
 def main():
     days = int(input())
-    if days not in [0, 1]:
-        # remove all values which don't match our conditions
-        weather = [x for x in map(int, input().split()) if abs(x) <= 273][:days]
 
-        # if filtered too much
-        days = len(weather)
-        print(chaos_days(days, weather))
-    else:
-        print(0)
+    # Remove all values which don't match our conditions
+    weather = [x for x in map(int, input().split()) if abs(x) <= 273][:days]
+
+    # If we've filtered too much
+    days = len(weather)
+    print(chaos_days(days, weather))
 
 
 def chaos_days(days, weather):
     counter = 0
 
+    # Edge conditions
+    if days == 0:
+        return counter
+
+    if days == 1:
+        return 1
+
+    # First condition
     if weather[0] > weather[1]:
         counter += 1
 
+    # Last condition
     if weather[-1] > weather[-2]:
         counter += 1
 

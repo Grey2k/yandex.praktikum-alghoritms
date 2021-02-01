@@ -16,21 +16,13 @@ class WeatherChaosTest(unittest.TestCase):
         self.assertEqual(stdout.getvalue(), '3\n')
 
     @patch('sys.stdin', io.StringIO("\n".join([
-        '0'
-    ])))
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_input_zero(self, stdout):
-        main()
-        self.assertEqual(stdout.getvalue(), '0\n')
-
-    @patch('sys.stdin', io.StringIO("\n".join([
-        '0',
+        '1',
         '1'
     ])))
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_input_one(self, stdout):
         main()
-        self.assertEqual(stdout.getvalue(), '0\n')
+        self.assertEqual(stdout.getvalue(), '1\n')
 
     @patch('sys.stdin', io.StringIO("\n".join([
         '2',
@@ -50,11 +42,21 @@ class WeatherChaosTest(unittest.TestCase):
         main()
         self.assertEqual(stdout.getvalue(), '1\n')
 
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '2',
+        '274 275'
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_big2(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), '0\n')
+
     def test_edge(self):
         self.assertEqual(chaos_days(2, [1, 3]), 1)
         self.assertEqual(chaos_days(5, [1, 2, 5, 4, 8, 10]), 2)
         self.assertEqual(chaos_days(5, [1, 2, 5, 4, 8]), 2)
         self.assertEqual(chaos_days(2, [1, 2]), 1)
+        self.assertEqual(chaos_days(2, [2, 1]), 1)
 
     def test_positive(self):
         self.assertEqual(chaos_days(7, [-1, -10, -8, 0, 2, 0, 5]), 3)
