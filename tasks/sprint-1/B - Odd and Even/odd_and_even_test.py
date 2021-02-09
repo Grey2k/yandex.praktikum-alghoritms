@@ -7,9 +7,11 @@ from odd_and_even import odd_and_even, main
 
 class OddAndEvenTest(unittest.TestCase):
 
-    @patch('builtins.input', side_effect=['1 2 -3'])
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '1 2 -3'
+    ])))
     @patch('sys.stdout', new_callable=io.StringIO)
-    def test_input(self, stdout, _):
+    def test_input(self, stdout):
         main()
         self.assertEqual(stdout.getvalue(), 'FAIL\n')
 

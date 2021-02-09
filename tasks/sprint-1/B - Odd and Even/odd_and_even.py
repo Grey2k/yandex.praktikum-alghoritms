@@ -3,9 +3,9 @@ def odd_and_even(a, b, c):
 
 
 def main():
-    a, b, c = map(int, input().strip())
+    a, b, c = map(int, input().strip().split())
 
-    print('WIN' if odd_and_even(a, b, c) else 'FALSE')
+    print('WIN' if odd_and_even(a, b, c) else 'FAIL')
 
 
 if __name__ == '__main__':
