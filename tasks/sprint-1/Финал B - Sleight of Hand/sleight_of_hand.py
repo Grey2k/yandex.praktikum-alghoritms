@@ -1,6 +1,6 @@
 import sys
 
-n = 4
+FIELD_SIZE = 4
 
 """
 Success #  48259202
@@ -10,8 +10,8 @@ Success #  48259202
 def main():
     fingers = int(input())
 
-    field = [[]] * n
-    for i in range(n):
+    field = [[]] * FIELD_SIZE
+    for i in range(FIELD_SIZE):
         field[i] = list(sys.stdin.readline().strip())
 
     print(score_hands(fingers, field))
