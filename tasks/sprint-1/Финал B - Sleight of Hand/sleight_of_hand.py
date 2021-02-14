@@ -1,6 +1,7 @@
 import sys
 
 FIELD_SIZE = 4
+PLAYERS_HANDS = 2
 
 """
 Success #  48259202
@@ -17,11 +18,11 @@ def main():
     print(score_hands(fingers, field))
 
 
-def score_hands(fingers, field, hands=2):
+def score_hands(fingers, field, hands=PLAYERS_HANDS):
     variants = dict()
 
-    for i in range(n):
-        for j in range(n):
+    for i in range(FIELD_SIZE):
+        for j in range(FIELD_SIZE):
             if field[i][j] == '.':
                 continue
 
