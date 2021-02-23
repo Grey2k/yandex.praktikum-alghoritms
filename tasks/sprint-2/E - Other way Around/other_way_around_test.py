@@ -3,27 +3,50 @@ import io
 from unittest.mock import patch
 
 from solution import solution
-from node import Node
+from node import DoubleConnectedNode
 
 
-class CaringMotherTest(unittest.TestCase):
+def print_list(node: DoubleConnectedNode) -> None:
+    while node.next is not None:
+        print(node.value)
+        node = node.next
+
+    print(node.value)
+
+
+class OtherWayAroundTest(unittest.TestCase):
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_input_one(self, stdout):
-        print(solution(Node('Head', next_item=Node('Next', next_item=Node('Finish'))), 'Finish'))
+        head = DoubleConnectedNode('Head')
+
+        print_list(solution(head))
         self.assertEqual(stdout.getvalue(), "\n".join([
-            '2'
+            'Head'
         ]) + '\n')
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_input_two(self, stdout):
-        print(solution(Node('Head', next_item=Node('Next', next_item=Node('Finish'))), 'Head'))
+        head = DoubleConnectedNode('Head')
+        tail = DoubleConnectedNode('Tail', prev=head)
+        head.next = tail
+
+        print_list(solution(head))
         self.assertEqual(stdout.getvalue(), "\n".join([
-            '0'
+            'Tail',
+            'Head'
         ]) + '\n')
 
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_input_three(self, stdout):
-        print(solution(Node('Head', next_item=Node('Next', next_item=Node('Finish'))), 'None'))
+        head = DoubleConnectedNode('Head')
+        tail = DoubleConnectedNode('Tail')
+        middle = DoubleConnectedNode('Next', prev=head, next=tail)
+        head.next = middle
+        tail.prev = middle
+
+        print_list(solution(head))
         self.assertEqual(stdout.getvalue(), "\n".join([
-            '-1'
+            'Tail',
+            'Next',
+            'Head'
         ]) + '\n')

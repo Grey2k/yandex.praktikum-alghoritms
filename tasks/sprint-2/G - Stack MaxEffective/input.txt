@@ -1,0 +1,11 @@
+10
+pop
+pop
+push 4
+push -5
+push 7
+pop
+pop
+get_max
+pop
+get_max

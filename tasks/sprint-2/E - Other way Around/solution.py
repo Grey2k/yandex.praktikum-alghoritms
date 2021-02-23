@@ -1,16 +1,15 @@
-from node import Node
+from node import DoubleConnectedNode
 
 
-def solution(node: Node, value) -> int:
-    i = 0
-    if node.value == value:
-        return 0
+def solution(node: DoubleConnectedNode) -> DoubleConnectedNode:
+    while node.next is not None:
+        current = node
+        node = node.next
 
-    while node.next_item is not None:
-        node = node.next_item
-        i += 1
+        current.next = current.prev
+        current.prev = node
 
-        if node.value == value:
-            return i
+    node.next = node.prev
+    node.prev = None
 
-    return -1
+    return node
