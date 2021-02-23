@@ -3,7 +3,7 @@ import io
 from unittest.mock import patch
 
 from solution import solution
-from node import DoubleConnectedNode
+from double_node import DoubleConnectedNode
 
 
 def print_list(node: DoubleConnectedNode) -> None:

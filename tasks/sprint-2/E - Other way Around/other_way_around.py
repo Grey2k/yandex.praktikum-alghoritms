@@ -1,4 +1,4 @@
-from node import DoubleConnectedNode
+from double_node import DoubleConnectedNode
 from solution import solution
 
 

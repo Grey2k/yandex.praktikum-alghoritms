@@ -1,0 +1,10 @@
+8
+2
+peek
+push 5
+push 2
+peek
+size
+size
+push 1
+size

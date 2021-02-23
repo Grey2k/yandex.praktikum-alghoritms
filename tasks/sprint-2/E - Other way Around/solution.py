@@ -1,4 +1,4 @@
-from node import DoubleConnectedNode
+from double_node import DoubleConnectedNode
 
 
 def solution(node: DoubleConnectedNode) -> DoubleConnectedNode:
