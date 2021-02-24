@@ -1,10 +1,10 @@
 def main():
     n, k = map(int, input().strip().split())
 
-    print(fibonacci(n) % (10 ** k))
+    print(fibonacci_module(n, k))
 
 
-def fibonacci(n):
+def fibonacci_module(n, k):
     if n == 1:
         return 1
 
@@ -15,9 +15,9 @@ def fibonacci(n):
     prev2 = 1
 
     for _ in range(2, n):
-        prev1, prev2 = prev2, prev1 + prev2
+        prev1, prev2 = prev2, (prev1 + prev2) % (10 ** k)
 
-    return prev1 + prev2
+    return (prev1 + prev2) % (10 ** k)
 
 
 if __name__ == '__main__':
