@@ -35,8 +35,8 @@ class Stack:
         return len(self.stack) == 0
 
 
-def is_int(char: str):
-    return char.lstrip('+-').isnumeric()
+def is_int(string_num):
+    return string_num.lstrip('+-').isnumeric()
 
 
 def main():
@@ -47,28 +47,28 @@ def main():
 
     stack = Stack()
 
-    for char in sequence:
-        if is_int(char):
-            stack.push(int(char))
+    for element in sequence:
+        if is_int(element):
+            stack.push(int(element))
             continue
 
         second = stack.pop()
         first = stack.pop()
 
         # operator cases
-        if char == '+':
+        if element == '+':
             stack.push(first + second)
             continue
 
-        if char == '-':
+        if element == '-':
             stack.push(first - second)
             continue
 
-        if char == '*':
+        if element == '*':
             stack.push(first * second)
             continue
 
-        if char == '/':
+        if element == '/':
             stack.push(first // second)
             continue
 

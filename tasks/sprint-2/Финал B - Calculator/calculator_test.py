@@ -39,6 +39,14 @@ class CalculatorTest(unittest.TestCase):
         self.assertEqual(stdout.getvalue(), '0\n')
 
     @patch('sys.stdin', io.StringIO("\n".join([
+        '42 42 + 84 -',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_two(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), '0\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
         '0 0 * 0 +',
     ])))
     @patch('sys.stdout', new_callable=io.StringIO)
