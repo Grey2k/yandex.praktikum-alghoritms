@@ -43,3 +43,41 @@ class SearchInBrokenArrayTest(unittest.TestCase):
             'rita',
             'timofey',
         ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '5',
+        'alla 1 0',
+        'gena 0 0',
+        'gosha 1 100',
+        'rita 0 0',
+        'timofey 0 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_three(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gosha',
+            'gena',
+            'rita',
+            'timofey',
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '5',
+        'alla 1 0',
+        'gena 0 0',
+        'gosha 1 100',
+        'rita 2 0',
+        'timofey 2 100',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_four(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'rita',
+            'timofey',
+            'alla',
+            'gosha',
+            'gena',
+        ]) + '\n')
