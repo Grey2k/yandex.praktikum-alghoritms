@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/tasks/sprint-3/O - Thrash Index Difference/trash_index_difference.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/tasks/sprint-3/P - Partial Sort/partial_sort.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
