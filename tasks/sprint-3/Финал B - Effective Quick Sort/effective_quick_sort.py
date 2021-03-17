@@ -16,7 +16,7 @@
 Сам алгоритм используем константную память O(1), точнее O(h) - где h - глубина рекурсии
 
 -- ID успешной посылки --
-49576706
+49577281
 """
 import sys
 
@@ -30,8 +30,6 @@ def main():
         login, completed, penalty = sys.stdin.readline().strip().split()
         participants.append((-int(completed), int(penalty), login))
 
-    # native sort - left here for test
-    # result = sorted(participants)
     quick_sort_effective(participants, 0, len(participants) - 1)
 
     for person in participants:

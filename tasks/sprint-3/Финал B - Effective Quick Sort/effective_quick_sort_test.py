@@ -267,6 +267,41 @@ class EffectiveQuickSortTest(unittest.TestCase):
             'gena'
         ]) + '\n')
 
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '13',
+        'tufhdbi 76 58',
+        'rqyoazgbmv 59 78',
+        'qvgtrlkmyrm 35 27',
+        'tgcytmfpj 70 27',
+        'xvf 84 19',
+        'jzpnpgpcqbsmczrgvsu 30 3',
+        'evjphqnevjqakze 92 15',
+        'wwzwv 87 8',
+        'tfpiqpwmkkduhcupp 1 82',
+        'tzamkyqadmybky 5 81',
+        'amotrxgba 0 6',
+        'easfsifbzkfezn 100 28',
+        'kivdiy 70 47',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_eighteen(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'easfsifbzkfezn',
+            'evjphqnevjqakze',
+            'wwzwv',
+            'xvf',
+            'tufhdbi',
+            'tgcytmfpj',
+            'kivdiy',
+            'rqyoazgbmv',
+            'qvgtrlkmyrm',
+            'jzpnpgpcqbsmczrgvsu',
+            'tzamkyqadmybky',
+            'tfpiqpwmkkduhcupp',
+            'amotrxgba',
+        ]) + '\n')
+
     def test_comparator(self):
         self.assertEqual((-1, 0, 'alla') > (-2, 0, 'gosha'), True)
         self.assertEqual((-1, 0, 'alla') < (-1, 0, 'gosha'), True)
