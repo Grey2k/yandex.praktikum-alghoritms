@@ -29,9 +29,9 @@ class SearchInBrokenArrayTest(unittest.TestCase):
         '5',
         'alla 0 0',
         'gena 0 0',
-        'gosha 0 0',
         'rita 0 0',
         'timofey 0 0',
+        'gosha 0 0',
     ])))
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_input_two(self, stdout):
@@ -81,3 +81,193 @@ class SearchInBrokenArrayTest(unittest.TestCase):
             'gosha',
             'gena',
         ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '1',
+        'alla 1 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_five(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '2',
+        'alla 1 0',
+        'gena 1 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_six(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '2',
+        'gena 1 0',
+        'alla 1 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_seven(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '2',
+        'gena 2 10',
+        'alla 2 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_eight(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '2',
+        'gena 1 10',
+        'alla 2 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_nine(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '5',
+        'alla 1 10',
+        'gena 1 10',
+        'gosha 1 10',
+        'rita 2 100',
+        'timofey 2 100',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_ten(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'rita',
+            'timofey',
+            'alla',
+            'gena',
+            'gosha',
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '2',
+        'alla 1 0',
+        'gena 1 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_eleven(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '2',
+        'alla 2 0',
+        'gena 2 10',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_twelve(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '2',
+        'alla 2 0',
+        'gena 1 10',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_thirteen(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '3',
+        'alla 1 0',
+        'gosha 1 0',
+        'gena 1 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_fourteen(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena',
+            'gosha'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '3',
+        'alla 2 0',
+        'gosha 2 0',
+        'gena 2 10',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_fifteen(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gosha',
+            'gena'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '3',
+        'alla 2 0',
+        'gosha 1 10',
+        'gena 1 10',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_sixteen(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'alla',
+            'gena',
+            'gosha'
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '5',
+        'alla 1 100',
+        'gena 1 1000',
+        'gosha 1 90',
+        'rita 1 90',
+        'timofey 10 80',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_input_seventeen(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'timofey',
+            'gosha',
+            'rita',
+            'alla',
+            'gena'
+        ]) + '\n')
+
+    def test_comparator(self):
+        self.assertEqual((-1, 0, 'alla') > (-2, 0, 'gosha'), True)
+        self.assertEqual((-1, 0, 'alla') < (-1, 0, 'gosha'), True)
+        self.assertEqual((-1, 10, 'alla') > (-1, 0, 'gosha'), True)
