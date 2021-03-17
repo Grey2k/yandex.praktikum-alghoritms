@@ -5,7 +5,7 @@ from unittest.mock import patch
 from effective_quick_sort import main
 
 
-class SearchInBrokenArrayTest(unittest.TestCase):
+class EffectiveQuickSortTest(unittest.TestCase):
     @patch('sys.stdin', io.StringIO("\n".join([
         '5',
         'alla 4 100',
