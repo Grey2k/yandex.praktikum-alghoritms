@@ -31,6 +31,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/tasks/sprint-4/A - Polinomial Hash/polinomial_hash.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/tasks/sprint-4/C - Prefix Hashes/prefix_hashes.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/tasks/sprint-4/E - Longest Substring/longest_substring.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
