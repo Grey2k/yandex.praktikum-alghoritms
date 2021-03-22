@@ -52,6 +52,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/tasks/sprint-4/H - Strange Comparison/strange_comparison.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/tasks/sprint-4/I - Common Subarray/common_subarray.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
