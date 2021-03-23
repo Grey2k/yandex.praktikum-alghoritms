@@ -66,6 +66,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/tasks/sprint-4/J - Sum of Fours/sum_of_fours.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
