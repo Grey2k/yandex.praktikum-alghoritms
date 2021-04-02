@@ -3,7 +3,7 @@ def main():
     m = int(input())
 
     try:
-        s = input()
+        s = input().strip()
     except EOFError:
         s = ''
 

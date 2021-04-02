@@ -73,6 +73,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/tasks/sprint-4/K - Nearest Station/nearest_station.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
