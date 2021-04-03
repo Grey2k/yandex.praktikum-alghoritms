@@ -80,6 +80,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/tasks/sprint-4/Финал B - Hash Table/hash_table.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>

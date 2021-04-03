@@ -15,10 +15,11 @@ def main():
     for i in range(m):
         station = tuple(map(int, sys.stdin.readline().split()))
         station_hash = area_hash(station)
-        if stations.get(station_hash) is None:
+        stations_list = stations.get(station_hash)
+        if stations_list is None:
             stations[station_hash] = [station]
         else:
-            stations[station_hash].append(station)
+            stations_list.append(station)
 
     top = 0
     top_index = 0
@@ -60,7 +61,7 @@ def area_hash(point):
 
 def get_stations(stations, metro):
     point_hash = area_hash(metro)
-    neighbours = [
+    neighbours = (
         (point_hash[0] - DISTANCE, point_hash[1] + DISTANCE),  # top left
         (point_hash[0], point_hash[1] + DISTANCE),  # top center
         (point_hash[0] + DISTANCE, point_hash[1] + DISTANCE),  # top right
@@ -70,12 +71,13 @@ def get_stations(stations, metro):
         (point_hash[0] - DISTANCE, point_hash[1] - DISTANCE),  # bottom left
         (point_hash[0], point_hash[1] - DISTANCE),  # bottom center
         (point_hash[0] + DISTANCE, point_hash[1] - DISTANCE),  # bottom right
-    ]
+    )
 
     near_stations = []
     for neighbour in neighbours:
-        if stations.get(neighbour) is not None:
-            near_stations += stations.get(neighbour)
+        neighbour_stations = stations.get(neighbour)
+        if neighbour_stations is not None:
+            near_stations += neighbour_stations
 
     return near_stations
 

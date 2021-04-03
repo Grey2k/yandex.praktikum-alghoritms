@@ -1,0 +1,9 @@
+8
+get 9
+delete 9
+put 9 1
+get 9
+put 9 2
+get 9
+put 9 3
+get 9
