@@ -1,48 +1,63 @@
 """
 -- ПРИНЦИП РАБОТЫ --
-Если масив был сдвинут то дополнительно для использования бинарного поиска нам нужно
-организоавть проверку на нахождение отсортированной половины массива, сравнив левый конец с медианой
-Далее воспользуемся обычным бинарным поиском
+Сперва мы создаем индекс - хеш-таблица с элементами (id документа, кол-во вхождений),
+далее считаем релевантность по каждому запросу и сортируем результат
 
 -- ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ --
-По условию задачи мы имеем дело с массивом с уникальными элементами, остальные случаи проверены написанными юнит-тестами
+Задача соответствует условиям, работа проверена с написанными юнит-тестами
 
 -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
-при каждой итерации мы сокращаем интервал поиска в два раза, соответственно сложность будет O(logN)
+Временная сложность O(M x N) - где M - колво слов в запросе, N - Размер индекса
 
 -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
-Мы храним искомый массив + дополнительные счетчики + используем рекурсивный алгоритм, из-за этого сложность O(logN)
-Так как мы делаем O(logN) вызовов в худшем случае и храним на стеке значения каждого вызова,
-в python не используется оптимизация хвостовой рекурсии (TCO)
+Пространственная сложность O(N) - где N - Размер индекса
 
 -- ID успешной посылки --
-49458142
+50333454
 """
 import sys
+from collections import Counter
 
 
 def main():
     n = int(input())
 
-    documents = []
-    for _ in range(n):
-        documents.append(sys.stdin.readline().strip().split())
+    index = {}
+    for idx in range(n):
+        counter = Counter(sys.stdin.readline().strip().split())
+        for word in counter:
+            word_index = index.get(word)
+            index_el = (idx + 1, counter[word])
+            if word_index is None:
+                index[word] = [index_el]
+            else:
+                index[word].append(index_el)
 
     q = int(input())
 
-    queries = []
     for _ in range(q):
-        queries.append(sys.stdin.readline().strip().split())
-
-    for query in queries:
-        docs = search_engine(query)
+        query = sys.stdin.readline().strip().split()
+        docs = search_engine(query, index)
 
         if len(docs) > 0:
             print(' '.join(map(str, docs)))
 
 
-def search_engine(query):
-    return [1, 2, 3]
+def search_engine(query, index):
+    relevant_results = {}
+    for word in set(query):
+        index_item = index.get(word)
+        if index_item is None:
+            continue
+
+        for doc_idx, count in index_item:
+            relevance = relevant_results.get(doc_idx)
+            if relevance is None:
+                relevant_results[doc_idx] = count
+            else:
+                relevant_results[doc_idx] += count
+
+    return [result[0] for result in sorted(relevant_results.items(), key=lambda item: (-item[1], item[0]))][:5]
 
 
 if __name__ == '__main__':
