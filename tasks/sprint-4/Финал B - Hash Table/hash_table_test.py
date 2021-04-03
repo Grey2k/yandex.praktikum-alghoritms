@@ -5,7 +5,7 @@ from unittest.mock import patch
 from hash_table import HashTable, main
 
 
-class SearchInBrokenArrayTest(unittest.TestCase):
+class HashTableTest(unittest.TestCase):
     @patch('sys.stdin', io.StringIO("\n".join([
         '10',
         'get 1',

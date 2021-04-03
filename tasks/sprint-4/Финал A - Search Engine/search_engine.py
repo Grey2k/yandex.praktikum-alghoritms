@@ -18,38 +18,31 @@
 -- ID успешной посылки --
 49458142
 """
+import sys
 
 
 def main():
     n = int(input())
-    needle = int(input())
-    array = list(map(int, input().strip().split()))[:n]
 
-    print(binary_search(array, 0, len(array) - 1, needle))
+    documents = []
+    for _ in range(n):
+        documents.append(sys.stdin.readline().strip().split())
+
+    q = int(input())
+
+    queries = []
+    for _ in range(q):
+        queries.append(sys.stdin.readline().strip().split())
+
+    for query in queries:
+        docs = search_engine(query)
+
+        if len(docs) > 0:
+            print(' '.join(map(str, docs)))
 
 
-def binary_search(haystack, left, right, needle):
-    mid = (left + right) // 2
-
-    if haystack[mid] == needle:
-        return mid
-
-    if right - left <= 0:
-        return -1
-
-    # if left part sorted
-    if haystack[left] < haystack[mid]:
-        if haystack[left] <= needle < haystack[mid]:
-            return binary_search(haystack, left, mid, needle)
-        else:
-            return binary_search(haystack, mid + 1, right, needle)
-
-    # if right part sorted
-    if haystack[left] >= haystack[mid]:
-        if haystack[mid] < needle <= haystack[right]:
-            return binary_search(haystack, mid + 1, right, needle)
-        else:
-            return binary_search(haystack, left, mid, needle)
+def search_engine(query):
+    return [1, 2, 3]
 
 
 if __name__ == '__main__':
