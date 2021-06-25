@@ -2,9 +2,8 @@
 -- ПРИНЦИП РАБОТЫ --
 В представленной реализации структуры данных HashTable я задаю максимальное возможное кол-во бакетов по условии задачи
 для вычисления бакета использую остаток от деления от максимума (так как все ключи integer) далее определив бакет
-- храню в нем пары (key, value). Для дополнительной оптимизации по скорости - ключи в бакете не удаляются,
-а удаляются только значения (думаю что это допустимо так как мы инкапсулируем реальное поведение объекта,
-хотя и жертвуем памятью)
+- храню в нем пары (key, value). Для дополнительной оптимизации по скорости - ключи в бакете удаляются,
+после замены с последним элементом чтобы исключить сдвиг в массиве (спасибо за подсказку!)
 
 -- ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ --
 Решение проверено написанными юнит-тестами
@@ -17,11 +16,11 @@
 В Худшем случае мы будем иметь O(N) где N - кол-во ключей
 
 -- ID успешной посылки --
-50312048
+50346119
 """
 import sys
 
-MAX_SIZE = 10 ** 5
+MAX_SIZE = 99991  # простое число меньше 10^5
 
 
 class HashTable:
@@ -29,11 +28,15 @@ class HashTable:
         self.max_size = max_size
         self.buckets = tuple(([] for _ in range(max_size)))
 
-    def __calc_hash(self, key):
+    @staticmethod
+    def __calc_hash(key):
+        return key
+
+    def __get_bucket(self, key):
         return key % self.max_size
 
     def get(self, key):
-        bucket = self.buckets[self.__calc_hash(key)]
+        bucket = self.buckets[self.__get_bucket(key)]
 
         if len(bucket) == 0:
             return None
@@ -45,7 +48,7 @@ class HashTable:
         return None
 
     def put(self, key, value):
-        bucket = self.buckets[self.__calc_hash(key)]
+        bucket = self.buckets[self.__get_bucket(key)]
 
         if len(bucket) == 0:
             bucket.append((key, value))
@@ -61,19 +64,20 @@ class HashTable:
         return
 
     def delete(self, key):
-        bucket = self.buckets[self.__calc_hash(key)]
-        value = None
+        bucket = self.buckets[self.__get_bucket(key)]
+        length = len(bucket)
 
-        if len(bucket) == 0:
-            return value
+        if length == 0:
+            return None
 
         for i in range(len(bucket)):
             if bucket[i][0] == key:
-                if bucket[i][1] is not None:
-                    value = bucket[i][1]
-                    bucket[i] = (key, None)
-                return value
-        return value
+                if length == 1 or i == (length - 1):
+                    return bucket.pop()[1]
+
+                bucket[i], bucket[-1] = bucket[-1], bucket[i]
+                return bucket.pop()[1]
+        return None
 
 
 CMD_GET = 'get'

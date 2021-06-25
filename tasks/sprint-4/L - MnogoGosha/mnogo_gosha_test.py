@@ -5,7 +5,7 @@ from unittest.mock import patch
 from mnogo_gosha import main
 
 
-class NearestStationTest(unittest.TestCase):
+class MnogoGoshaTest(unittest.TestCase):
     @patch('sys.stdin', io.StringIO("\n".join([
         '10 2',
         'gggggooooogggggoooooogggggssshaa',

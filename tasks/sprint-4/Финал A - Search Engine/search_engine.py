@@ -7,16 +7,26 @@
 Задача соответствует условиям, работа проверена с написанными юнит-тестами
 
 -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
-Временная сложность O(M x N) - где M - колво слов в запросе, N - Размер индекса
+Временная сложность O(K x I x L) - где
+K - кол-во уникальных слов в индексе (суммарное),
+I - кол-во повторений каждого слова в докуменах
+L - Кол-во уникальных слов в запросах (суммарное)
+
 
 -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
-Пространственная сложность O(N) - где N - Размер индекса
+Пространственная сложность O(K * I) -
+где K - суммарное кол-во уникальных слов в документах
+где I - кол-во повторений каждого слова в докуменах
+
 
 -- ID успешной посылки --
-50333454
+50345603
 """
 import sys
 from collections import Counter
+from heapq import nsmallest
+
+LIMIT = 5
 
 
 def main():
@@ -57,7 +67,7 @@ def search_engine(query, index):
             else:
                 relevant_results[doc_idx] += count
 
-    return [result[0] for result in sorted(relevant_results.items(), key=lambda item: (-item[1], item[0]))][:5]
+    return [result[0] for result in nsmallest(LIMIT, relevant_results.items(), key=lambda item: (-item[1], item[0]))]
 
 
 if __name__ == '__main__':
