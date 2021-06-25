@@ -1,4 +1,4 @@
-def solution(node):
+def solution(node) -> int:
     root_value = node.value
 
     if (node.left is None) and (node.right is None):
