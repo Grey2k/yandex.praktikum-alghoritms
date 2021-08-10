@@ -35,7 +35,6 @@ def remove(root: Optional[Node], key: int) -> Optional[Node]:
         return root
 
     # Removing found node
-
     return remove_node(root, parent_of_node_to_remove, node_to_remove)
 
 
@@ -52,7 +51,6 @@ def remove_node(root: Node, node_parent: Optional[Node], node: Node) -> Optional
     if node is root:
         if left is None:
             root = right
-            return root
         else:
             max_node = find_max_and_remove(left)
             root = max_node
@@ -63,7 +61,7 @@ def remove_node(root: Node, node_parent: Optional[Node], node: Node) -> Optional
 
             max_node.right = right
 
-            return root
+        return root
 
     # 2 Case - Node has no children
     if left is None and right is None:
@@ -74,7 +72,7 @@ def remove_node(root: Node, node_parent: Optional[Node], node: Node) -> Optional
 
         return root
 
-    # 2 Case - Node has children
+    # 3 Case - Node has children
     if left is None:
         if node_parent.left is node:
             node_parent.left = right
