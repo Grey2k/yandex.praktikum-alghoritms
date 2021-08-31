@@ -1,82 +1,63 @@
 # from typing import Dict, List
 import math
-
-# from draw import nx, draw
-
-DISTANCE_INF = -1
+from draw import nx, draw
 
 
 def main():
     n, m = map(int, input().strip().split())
 
     adjacency_matrix = [[math.inf for _ in range(n)] for _ in range(n)]
-    distance_matrix = [[DISTANCE_INF for _ in range(n)] for _ in range(n)]
 
-    # graph = nx.Graph()
-    # graph.add_nodes_from(range(1, n + 1))
+    graph = nx.Graph()
+    graph.add_nodes_from(range(1, n + 1))
 
     for _ in range(m):
         u, v, w = map(int, input().strip().split())
-        # graph.add_edge(u, v, weight=w)
+        graph.add_edge(u, v, weight=w)
         if adjacency_matrix[u - 1][v - 1] > w:
             adjacency_matrix[u - 1][v - 1] = w
             adjacency_matrix[v - 1][u - 1] = w
 
-    # print(adjacency_matrix)
-    # print(colors)
-    #
-    # draw(graph)
+    start = 1
 
-    for node in range(1, n + 1):
-        dejkstra(node, adjacency_matrix, distance_matrix)
+    print(adjacency_matrix)
+    draw(graph)
 
-    for line in distance_matrix:
-        print(' '.join(map(str, line)))
+    mst = []
+    edges = []
 
-
-def dejkstra(start: int, graph: list, distances: list) -> None:
-    distance = [math.inf for _ in range(len(graph) + 1)]
-    parent = [None for _ in range(len(graph) + 1)]
-    visited = [False for _ in range(len(graph) + 1)]
-
-    distance[start] = 0
-
-    while True:
-        u = get_min_dist_not_visited_vertex(graph, visited, distance)
-
-        if u is None:
-            return
-
-        visited[u] = True
-        distances[u - 1][u - 1] = 0
-        for v in [v[0] + 1 for v in enumerate(graph[u - 1]) if v[1] > 0]:
-            relax(start, u, v, graph, distance, parent, distances)
+    try:
+        find_mst(adjacency_matrix, mst)
+        print(str(sum([v[1] for v in mst])))
+    except ValueError as e:
+        print(e)
 
 
-def get_min_dist_not_visited_vertex(graph: list, visited: list, distance: list):
-    current_minimum = math.inf
-    current_minimum_vertex = None
+def find_mst(adjacency_matrix: list, edges: list, mst: list):
+    not_added = {v for v in range(1, len(adjacency_matrix) + 1)}
+    added = {}
 
-    for v in range(1, len(graph) + 1):
-        if not visited[v] and distance[v] < current_minimum:
-            current_minimum = distance[v]
-            current_minimum_vertex = v
+    start = 1
+    add_vertex(start)
 
-    return current_minimum_vertex
+    while len(not_added) > 0 and len(edges) > 0:
+        e = extract_minimum(edges)
+        if e.end in not_added:
+            mst.append(e)
+            add_vertex(e.end)
+
+    if len(not_added) > 0:
+        ValueError('Oops! I did it again')
+
+    return mst
 
 
-def relax(start: int, u: int, v: int, graph: list, distance: list, parent: list, distances: list):
-    if parent[u] == v:
-        return
+def add_vertex(v: int, graph: list, added: set, not_added: set, edges: list):
+    pass
 
-    distance_u_v = distance[u] + graph[u - 1][v - 1]
 
-    if distance[v] > distance_u_v:
-        distance[v] = distance_u_v
-        parent[v] = u
-
-        distances[start - 1][v - 1] = distance[v]
-        distances[v - 1][start - 1] = distance[v]
+def extract_minimum(edges: list):
+    pass
 
 
 if __name__ == '__main__':
