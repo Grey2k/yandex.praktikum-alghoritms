@@ -49,7 +49,7 @@ def dejkstra(start: int, graph: list, distances: list) -> None:
 
         visited[u] = True
         distances[u - 1][u - 1] = 0
-        for v in [v[0] + 1 for v in enumerate(graph[u - 1]) if v[1] > 0]:
+        for v in [v[0] + 1 for v in enumerate(graph[u - 1]) if v[1] < math.inf]:
             relax(start, u, v, graph, distance, parent, distances)
 
 

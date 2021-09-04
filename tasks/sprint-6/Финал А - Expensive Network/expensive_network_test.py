@@ -37,7 +37,30 @@ class ExpensiveNetworkTest(unittest.TestCase):
         '2 0',
     ])))
     @patch('sys.stdout', new_callable=io.StringIO)
-    def test_two(self, stdout):
+    def test_edge_one(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'Oops! I did it again',
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '1 0',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_edge_two(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            '0',
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '4 3',
+        '1 2 1',
+        '1 2 2',
+        '2 3 1',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_three(self, stdout):
         main()
         self.assertEqual(stdout.getvalue(), "\n".join([
             'Oops! I did it again',
