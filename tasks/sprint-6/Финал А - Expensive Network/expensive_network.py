@@ -1,16 +1,30 @@
+"""
+-- ПРИНЦИП РАБОТЫ --
+В данной задаче мы реализуем и слегка модифицируем алгоритм Прима для поиска минимального оставного дерева.
+Вместо минимума среди множества ребер остова мы ищем максимум в итоге получаем максимально возможный вес остова
+
+-- ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ --
+Решение проверено написанными юнит-тестами и соответствует алгоритму
+
+-- ВРЕМЕННАЯ СЛОЖНОСТЬ --
+Так как для поиска мы используем приоритетную очередь, то сложность в основном будет зависеть от вида графа,
+в плотном графе E будет стремиться к V^2,
+получается что сложность будет O(V*LogV + E) - где V - кол во вершин, E - кол-во ребер,
+для плотных графов O(V^2) , так как V^2 >> V*LogV
+
+-- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
+Мы храним пары вершин и ребра (u,v,w) соответственно O(V + E), где V - кол во вершин, E - кол-во ребер
+
+-- ID успешной посылки --
+52621655
+"""
 from heapq import heappush, heappop
-
-
-# from draw import nx, draw
 
 
 def main():
     n, m = map(int, input().strip().split())
 
     adjacency_matrix = [[0 for _ in range(n)] for _ in range(n)]
-
-    # graph = nx.Graph()
-    # graph.add_nodes_from(range(1, n + 1))
 
     for _ in range(m):
         u, v, w = map(int, input().strip().split())
@@ -19,15 +33,10 @@ def main():
         if u == v:
             continue
 
-        # graph.add_edge(u, v, weight=w)
-
         # remove parallel edges
         if adjacency_matrix[u - 1][v - 1] < w:
             adjacency_matrix[u - 1][v - 1] = w
             adjacency_matrix[v - 1][u - 1] = w
-
-    # print(adjacency_matrix)
-    # draw(graph)
 
     mst = []
     edges = []
@@ -66,7 +75,7 @@ def add_vertex(v: int, graph: list, added: set, not_added: set, edges: list):
     added.add(v)
     not_added.remove(v)
 
-    # edge represents as tuple (v, u, w)
+    # edge represents as tuple (w, v, u) , heapq implements min-heap sort, due to it - weight is negative
     for edge in [(-u[1], v, u[0] + 1) for u in enumerate(graph[v - 1]) if u[1] > 0 and (u[0] + 1) in not_added]:
         heappush(edges, edge)
 
