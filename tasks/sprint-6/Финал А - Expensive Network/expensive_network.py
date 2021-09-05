@@ -9,34 +9,35 @@
 -- ВРЕМЕННАЯ СЛОЖНОСТЬ --
 Так как для поиска мы используем приоритетную очередь, то сложность в основном будет зависеть от вида графа,
 в плотном графе E будет стремиться к V^2,
-получается что сложность будет O(V*LogV + E) - где V - кол во вершин, E - кол-во ребер,
-для плотных графов O(V^2) , так как V^2 >> V*LogV
+получается что сложность будет O(E*LogV) - где V - кол во вершин, E - кол-во ребер,
+для плотных графов O(V^2) , так как V^2 >> E*LogV
 
 -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
-Мы храним пары вершин и ребра (u,v,w) соответственно O(V + E), где V - кол во вершин, E - кол-во ребер
+Мы храним пары вершин и ребра (w,v,u) соответственно O(V + E), где V - кол во вершин, E - кол-во ребер
 
 -- ID успешной посылки --
-52621655
+52656582
 """
 from heapq import heappush, heappop
+from typing import Dict
 
 
 def main():
     n, m = map(int, input().strip().split())
 
-    adjacency_matrix = [[0 for _ in range(n)] for _ in range(n)]
+    edges_list = {(n + 1): {} for n in range(n)}  # type: Dict[int, Dict[int]]
 
     for _ in range(m):
-        u, v, w = map(int, input().strip().split())
+        v, u, w = map(int, input().strip().split())
 
         # remove loops
-        if u == v:
+        if v == u:
             continue
 
         # remove parallel edges
-        if adjacency_matrix[u - 1][v - 1] < w:
-            adjacency_matrix[u - 1][v - 1] = w
-            adjacency_matrix[v - 1][u - 1] = w
+        if edges_list.get(u).get(v) is None or edges_list[u].get(v) < w:
+            edges_list[v][u] = w
+            edges_list[u][v] = w
 
     mst = []
     edges = []
@@ -45,13 +46,13 @@ def main():
         if n > 1 and m == 0:
             raise ValueError('Oops! I did it again')
 
-        find_mst(adjacency_matrix, edges, mst)
+        find_mst(edges_list, edges, mst)
         print(str(sum([-v[0] for v in mst])))
     except ValueError as e:
         print(e)
 
 
-def find_mst(graph: list, edges: list, mst: list):
+def find_mst(graph: dict, edges: list, mst: list):
     not_added = {v for v in range(1, len(graph) + 1)}
     added = set()
 
@@ -71,12 +72,12 @@ def find_mst(graph: list, edges: list, mst: list):
     return mst
 
 
-def add_vertex(v: int, graph: list, added: set, not_added: set, edges: list):
+def add_vertex(v: int, graph: dict, added: set, not_added: set, edges: list):
     added.add(v)
     not_added.remove(v)
 
     # edge represents as tuple (w, v, u) , heapq implements min-heap sort, due to it - weight is negative
-    for edge in [(-u[1], v, u[0] + 1) for u in enumerate(graph[v - 1]) if u[1] > 0 and (u[0] + 1) in not_added]:
+    for edge in [(-item[1], v, item[0]) for item in graph.get(v).items() if item[0] in not_added]:
         heappush(edges, edge)
 
 

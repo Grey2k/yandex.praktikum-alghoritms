@@ -44,3 +44,19 @@ class RailRoadsTest(unittest.TestCase):
         self.assertEqual(stdout.getvalue(), "\n".join([
             'NO',
         ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '7',
+        'R',
+        'R',
+        'B',
+        '',
+        'BR',
+        'B'
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_three(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            'NO',
+        ]) + '\n')

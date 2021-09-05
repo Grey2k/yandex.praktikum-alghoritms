@@ -1,82 +1,70 @@
-# from typing import Dict, List
-import math
+"""
+-- ПРИНЦИП РАБОТЫ --
+Условие задачи было не совсем стандартным, поэтому поломав
+голову пошел за помощью и коллеги дали подсказку по тому что можно представить типы дорог в виде направления движения
+(думал сперва про перебор пар или расчет двух остовов).
+В итоге задача свялась к построению направленного графа и поиска в нем цикла.
 
-# from draw import nx, draw
+-- ДОКАЗАТЕЛЬСТВО КОРРЕКТНОСТИ --
+Решение проверено написанными юнит-тестами и соответствует алгоритму
 
-DISTANCE_INF = -1
+-- ВРЕМЕННАЯ СЛОЖНОСТЬ --
+Сложность DFS алгоритма O(V + E) где V - кол во вершин, E - кол-во ребер
+
+-- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
+Не учитывая память под сам граф -мы храним вершины на стеке и массив цветов в кол-ве V - поэтому сложность O(V)
+
+-- ID успешной посылки --
+52657059
+"""
+COLOR_WHITE = 'white'
+COLOR_GRAY = 'gray'
+COLOR_BLACK = 'black'
+
+TYPE_FORWARD = 'B'
+# noinspection PyUnusedName
+TYPE_BACKWARD = 'R'
 
 
 def main():
-    n, m = map(int, input().strip().split())
+    n = int(input().strip())
 
-    adjacency_matrix = [[math.inf for _ in range(n)] for _ in range(n)]
-    distance_matrix = [[DISTANCE_INF for _ in range(n)] for _ in range(n)]
+    adjacency_list = {(n + 1): [] for n in range(n)}  # type Dict[int, List[int]]
+    colors = [COLOR_WHITE for n in range(n + 1)]
 
-    # graph = nx.Graph()
-    # graph.add_nodes_from(range(1, n + 1))
+    for v in range(1, n):
+        for u, t in [(v + i + 1, t) for i, t in enumerate(input().strip())]:
 
-    for _ in range(m):
-        u, v, w = map(int, input().strip().split())
-        # graph.add_edge(u, v, weight=w)
-        if adjacency_matrix[u - 1][v - 1] > w:
-            adjacency_matrix[u - 1][v - 1] = w
-            adjacency_matrix[v - 1][u - 1] = w
+            if t == TYPE_FORWARD:
+                adjacency_list.get(v).append(u)
+            else:
+                adjacency_list.get(u).append(v)
 
-    # print(adjacency_matrix)
-    # print(colors)
-    #
-    # draw(graph)
+    try:
+        for v in range(1, n):
+            if colors[v] == COLOR_WHITE:
+                dfs_stack(v, adjacency_list, colors)
 
-    for node in range(1, n + 1):
-        dejkstra(node, adjacency_matrix, distance_matrix)
-
-    for line in distance_matrix:
-        print(' '.join(map(str, line)))
+        print('YES')
+    except AssertionError:
+        print('NO')
 
 
-def dejkstra(start: int, graph: list, distances: list) -> None:
-    distance = [math.inf for _ in range(len(graph) + 1)]
-    parent = [None for _ in range(len(graph) + 1)]
-    visited = [False for _ in range(len(graph) + 1)]
+def dfs_stack(start: int, graph: dict, colors: list) -> None:
+    stack = [start]
+    while len(stack) > 0:
+        v = stack.pop()
+        if colors[v] == COLOR_WHITE:
+            colors[v] = COLOR_GRAY
+            stack.append(v)
 
-    distance[start] = 0
-
-    while True:
-        u = get_min_dist_not_visited_vertex(graph, visited, distance)
-
-        if u is None:
-            return
-
-        visited[u] = True
-        distances[u - 1][u - 1] = 0
-        for v in [v[0] + 1 for v in enumerate(graph[u - 1]) if v[1] > 0]:
-            relax(start, u, v, graph, distance, parent, distances)
-
-
-def get_min_dist_not_visited_vertex(graph: list, visited: list, distance: list):
-    current_minimum = math.inf
-    current_minimum_vertex = None
-
-    for v in range(1, len(graph) + 1):
-        if not visited[v] and distance[v] < current_minimum:
-            current_minimum = distance[v]
-            current_minimum_vertex = v
-
-    return current_minimum_vertex
-
-
-def relax(start: int, u: int, v: int, graph: list, distance: list, parent: list, distances: list):
-    if parent[u] == v:
-        return
-
-    distance_u_v = distance[u] + graph[u - 1][v - 1]
-
-    if distance[v] > distance_u_v:
-        distance[v] = distance_u_v
-        parent[v] = u
-
-        distances[start - 1][v - 1] = distance[v]
-        distances[v - 1][start - 1] = distance[v]
+            for node in graph.get(v):
+                if colors[node] == COLOR_WHITE:
+                    stack.append(node)
+                if colors[node] == COLOR_GRAY:
+                    raise AssertionError('Cycle Found')
+        elif colors[v] == COLOR_GRAY:
+            colors[v] = COLOR_BLACK
 
 
 if __name__ == '__main__':
