@@ -16,7 +16,7 @@
 Мы храним пары вершин и ребра (w,v,u) соответственно O(V + E), где V - кол во вершин, E - кол-во ребер
 
 -- ID успешной посылки --
-52656582
+52666580
 """
 from heapq import heappush, heappop
 from typing import Dict
@@ -47,7 +47,7 @@ def main():
             raise ValueError('Oops! I did it again')
 
         find_mst(edges_list, edges, mst)
-        print(str(sum([-v[0] for v in mst])))
+        print(str(sum(-v[0] for v in mst)))
     except ValueError as e:
         print(e)
 
@@ -59,7 +59,7 @@ def find_mst(graph: dict, edges: list, mst: list):
     start = 1
     add_vertex(start, graph, added, not_added, edges)
 
-    while len(not_added) > 0 and len(edges) > 0:
+    while not_added and edges:
         e = heappop(edges)
 
         if e[2] in not_added:
