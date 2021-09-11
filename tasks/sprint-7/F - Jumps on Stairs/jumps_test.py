@@ -2,36 +2,46 @@ import unittest
 import io
 from unittest.mock import patch
 
-from fibonacci import main
+from jumps import main
 
 
-class FibonacciTest(unittest.TestCase):
+class JumpsTest(unittest.TestCase):
     @patch('sys.stdin', io.StringIO("\n".join([
-        '5',
+        '6 3',
     ])))
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_one(self, stdout):
         main()
         self.assertEqual(stdout.getvalue(), "\n".join([
-            '8',
+            '13',
         ]) + '\n')
 
     @patch('sys.stdin', io.StringIO("\n".join([
-        '2',
+        '7 7',
     ])))
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_two(self, stdout):
         main()
         self.assertEqual(stdout.getvalue(), "\n".join([
-            '2',
+            '32',
         ]) + '\n')
 
     @patch('sys.stdin', io.StringIO("\n".join([
-        '10',
+        '2 2',
     ])))
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_three(self, stdout):
         main()
         self.assertEqual(stdout.getvalue(), "\n".join([
-            '89',
+            '1',
+        ]) + '\n')
+
+    @patch('sys.stdin', io.StringIO("\n".join([
+        '79 34',
+    ])))
+    @patch('sys.stdout', new_callable=io.StringIO)
+    def test_three(self, stdout):
+        main()
+        self.assertEqual(stdout.getvalue(), "\n".join([
+            '470472762',
         ]) + '\n')
