@@ -31,7 +31,7 @@ class HoroscopesTest(unittest.TestCase):
     def test_two(self, stdout):
         main()
         self.assertEqual(stdout.getvalue(), "\n".join([
-            '0'
+            '0',
         ]) + '\n')
 
     @patch('sys.stdin', io.StringIO("\n".join([
@@ -44,5 +44,7 @@ class HoroscopesTest(unittest.TestCase):
     def test_three(self, stdout):
         main()
         self.assertEqual(stdout.getvalue(), "\n".join([
-            '0'
+            '3',
+            '3 4 8',
+            '3 4 5',
         ]) + '\n')
