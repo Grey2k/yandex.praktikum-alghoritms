@@ -45,18 +45,24 @@ def find(search: list, pattern: list, start: int) -> int:
     if start >= len(search):
         return result
 
-    for i in range(start, len(search)):
+    if len(search) - start < len(pattern):
+        return result
+
+    for pos in range(start, len(search) - len(pattern)):
         shift = None
-        for j in range(len(pattern)):
-            if search[i] == pattern[j] or shift is None:
-                shift = search[i] - pattern[j]
-            elif shift is not None and (search[i] + shift) == pattern[j]:
-                continue
-            else:
-                return result
+        match = True
 
-        return i
+        for offset in range(len(pattern)):
+            if shift is None:
+                shift = search[pos] - pattern[offset]
 
+            if search[pos + offset] + shift != pattern[offset]:
+                match = False
+                break
+
+        if match:
+            result = pos
+            break
 
     return result
 
