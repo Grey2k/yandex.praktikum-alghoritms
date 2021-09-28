@@ -112,7 +112,7 @@ def unpack(string: str, multiplier=1) -> str:
 def find_prefix(strings: list) -> str:
     prefix = 0
 
-    min_len = 10 ** 7 + 1
+    min_len = 10 ** 5 + 1
     max_len = 0
 
     for i in range(len(strings)):
